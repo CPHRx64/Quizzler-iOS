@@ -12,9 +12,12 @@ class ViewController: UIViewController {
     
     //Place your instance variables here
     
-    let allQuestions = QuestionBank()   // constant
-    var pickedAnswer : Bool = false     // Variable
-    
+    let questions = QuestionBank()   // constant
+    var pickedAnswer : Bool = false // Variable
+    var questionNr : Int = 0
+    var currentPoint : Int = 0
+
+
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -24,9 +27,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let firstQuestion = allQuestions.list[0]
-        questionLabel.text = firstQuestion.questionText
-        
+        let currentQuestion = questions.list[questionNr]
+        questionLabel.text = currentQuestion.questionText
+        scoreLabel.text = String(0)
         
     }
 
@@ -38,31 +41,43 @@ class ViewController: UIViewController {
             pickedAnswer = false
         }
         checkAnswer()
+        updateUI()
+
     }
     
     
+    
     func updateUI() {
-      
+        scoreLabel.text = String(currentPoint)
+        if (questionNr < questions.getSize()) {
+            nextQuestion()
+        }else {
+            startOver()
+        }
     }
     
 
     func nextQuestion() {
-        
+        questionNr += 1
+        questionLabel.text = questions.list[questionNr].questionText
     }
     
     
     func checkAnswer() {
-        let firstQuestion = allQuestions.list[0]
+        let firstQuestion = questions.list[0]
         if (firstQuestion.answer == pickedAnswer) {
+            currentPoint += 1
             print("yay")
         }else {
             print("yuke")
         }
+        questionNr += 1
     }
     
     
     func startOver() {
-       
+        questionNr = 0
+        questionLabel.text = questions.list[questionNr].questionText
     }
     
 
