@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ViewController: UIViewController {
     
     // Variables
@@ -27,6 +28,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+
     }
 
     
@@ -44,6 +46,9 @@ class ViewController: UIViewController {
         currentQuestion = questions.list[questionIndex]
         if (currentQuestion.answer == pickedAnswer) {
             currentPoint += 1
+            ProgressHUD.showSuccess("YAY")
+        } else {
+            ProgressHUD.showError("YUKE")
         }
     }
     
